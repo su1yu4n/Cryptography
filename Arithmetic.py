@@ -38,15 +38,20 @@ def FastModularExponentiation(x, y, n):
         x = (x * x) % n
     return res
 
-def egcd(a, b):
+def egcd(a, b, verbose=True):
     '''
     Extended Euclidean Algorithm.
     returns x, y, gcd(a,b) such that ax + by = gcd(a,b).
     '''
+    if verbose:
+        print(f'Solving extended gcd({a}, {b})')
+
     u, u1 = 1, 0
     v, v1 = 0, 1
     while b:
         q, r = divmod(a, b)
+        if verbose:
+            print(f'{a} = {b}*{q} + {r}')
         u, u1 = u1, u - q * u1
         v, v1 = v1, v - q * v1
         a, b = b, r
@@ -61,12 +66,14 @@ def gcd(a,b):
         a, b = b, a % b
     return a
 
-def ModInverse(e, n):
+def ModInverse(e, n, verbose=True):
     '''
     Solve d such that `d * e ≡ 1 (mod n)`.
     N.d. gcd(e, n) must be 1.
     '''
-    res, _, g = egcd(e, n)
+
+    res, _, g = egcd(e, n, verbose)
+        
     assert(g == 1) # e has an inverse modulo n iff gcd(e, n) == 1
     return res % n
 

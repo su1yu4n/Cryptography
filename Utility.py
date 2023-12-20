@@ -105,3 +105,20 @@ def bits2str(b):
     :rtype: str
     '''
     return ''.join(chr(int(b[i:i+8],2)) for i in range(0,len(b),8)) # ok
+
+def int2bits(a: int, verbose=True):
+    '''
+    convert integers to binary str representation
+
+    result is a list from low bit to high bit,
+    eg. 6 -> 110, result is [0, 1, 1]
+    '''
+    bits = [1 if bi == '1' else 0 for bi in bin(a)[2:]]
+    bits.reverse()
+    
+    if verbose:
+        result_str = ''
+        for i in range(len(bits)):
+            result_str += f'2^{i} + ' if bits[i] == 1 else ''
+        print(result_str[:-2])
+    return bits
